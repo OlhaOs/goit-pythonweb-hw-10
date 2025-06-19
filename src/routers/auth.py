@@ -51,6 +51,11 @@ async def login(body: UserModel, db: Session = Depends(get_db)):
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid password"
         )
 
+    if not user.confirmed:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Email not confirmed"
+        )
+
     access_token = await create_access_token(data={"sub": user.email})
     return {"access_token": access_token, "token_type": "bearer"}
 
