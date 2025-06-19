@@ -18,7 +18,7 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 hash_handler = Hash()
 
 
-@router.post("/signup")
+@router.post("/signup", status_code=status.HTTP_201_CREATED)
 async def signup(
     body: UserModelRegister,
     background_tasks: BackgroundTasks,
@@ -38,7 +38,7 @@ async def signup(
     return new_user
 
 
-@router.post("/login")
+@router.post("/login", status_code=status.HTTP_201_CREATED)
 async def login(body: UserModel, db: Session = Depends(get_db)):
     user = await get_user_by_email(body.email, db)
     if user is None:

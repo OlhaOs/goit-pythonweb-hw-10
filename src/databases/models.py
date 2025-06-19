@@ -1,6 +1,15 @@
 import enum
 from .connect import Base, engine
-from sqlalchemy import Column, Integer, String, Date, Boolean, Enum, ForeignKey
+from sqlalchemy import (
+    Column,
+    Integer,
+    String,
+    Date,
+    Boolean,
+    Enum,
+    ForeignKey,
+    UniqueConstraint,
+)
 from sqlalchemy.orm import relationship
 
 
@@ -15,12 +24,16 @@ class Contact(Base):
     id = Column(Integer, primary_key=True, index=True)
     first_name = Column(String(50), nullable=False)
     last_name = Column(String(50), nullable=False)
-    email = Column(String(100), unique=True, nullable=False)
-    phone_number = Column(String(20), unique=True, nullable=False)
+    email = Column(String(100), nullable=False)
+    phone_number = Column(String(20), nullable=False)
     birthday = Column(Date, nullable=False)
 
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     user = relationship("User", back_populates="contacts")
+    __table_args__ = (
+        UniqueConstraint("user_id", "email", name="unique_user_email"),
+        UniqueConstraint("user_id", "phone_number", name="unique_user_phone"),
+    )
 
 
 class User(Base):

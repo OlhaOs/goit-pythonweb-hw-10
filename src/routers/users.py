@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Depends, File, UploadFile
 from sqlalchemy.orm import Session
-from repository.user import update_avatar_url
-from services.upload_file import UploadFileService
+from src.repository.user import update_avatar_url
+from src.services.upload_file import UploadFileService
 from src.schemas.auth import User
 from src.databases.models import User as UserORM
 from src.databases.connect import get_db
 
 from src.services.auth import auth_service
-from settings.config import settings
+from src.settings.config import settings
 
 
 router = APIRouter(prefix="/user", tags=["users"])

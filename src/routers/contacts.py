@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, status
 
 from src.databases.models import User
 from src.databases.connect import get_db
@@ -14,7 +14,7 @@ router = APIRouter(prefix="/contacts", tags=["contacts"])
     "/",
     response_model=schemas_contact.ContactResponse,
     name="API for create contact",
-    status_code=201,
+    status_code=status.HTTP_201_CREATED,
 )
 async def create_contact(
     body: schemas_contact.ContactModel,

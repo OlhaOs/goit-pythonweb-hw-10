@@ -14,7 +14,7 @@ from src.settings.base import ALGORITHM, SECRET_KEY
 
 class Auth:
 
-    r = redis.Redis(host="localhost", port=6379, db=0)
+    r = redis.Redis(host="redis", port=6379, db=0)
 
     async def get_current_user(
         self,
